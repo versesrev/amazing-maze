@@ -59,7 +59,6 @@ body {
     height: auto;
     aspect-ratio: 1; /* Keep squares as perfect squares */
     background-color: #00aaff;
-    color: white;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -67,6 +66,15 @@ body {
     cursor: pointer;
     transition: transform 0.2s ease;
     text-align: center;
+}
+
+.square svg {
+    width: 50%;
+    height: 50%;
+    fill: none;
+    stroke: #fff;
+    stroke-width: 10;
+    stroke-linecap: round;
 }
 
 .square.selected {
@@ -99,6 +107,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let selectedSquare = null; // To track the currently selected square
 
+    // Define possible paths (L-shape, vertical, horizontal)
+    const paths = [
+        '<path d="M50,0 L50,100" />', // Vertical line
+        '<path d="M0,50 L100,50" />', // Horizontal line
+        //'<path d="M0,50 L50,50 L50,100" />', // L-shape bottom left
+        '<path d="M50,0 L50,50 L100,50" />', // L-shape top right
+        '<path d="M50,0 L50,50 L0,50" />', // L-shape top left
+        '<path d="M100,50 L50,50 L50,100" />' // L-shape bottom right
+    ];
+	
     // Create 16 grid cells
     for (let i = 0; i < 16; i++) {
         const cell = document.createElement("div");
@@ -118,6 +136,11 @@ document.addEventListener("DOMContentLoaded", () => {
         square.classList.add("square");
         square.textContent = i + 1;
         square.setAttribute("data-square", i);
+		
+		// Add an SVG line or L-shape
+        const randomPath = paths[Math.floor(Math.random() * paths.length)];
+        square.innerHTML = `<svg viewBox="0 0 100 100">${randomPath}</svg>`;
+		
         square.addEventListener("click", () => selectSquare(square));
         squaresContainer.appendChild(square);
     }
