@@ -6,52 +6,80 @@
     <title>Drag and Drop Game</title>
     <!-- <link rel="stylesheet" href="styles.css"> -->
     <style>
-/* styles.css */
+
+/* Ensure the body takes up the entire viewport */
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #f4f4f9;
+    overflow: hidden; /* Prevent scrolling */
+}
+
+.container {
+    text-align: center;
+    width: 90vw; /* Limit the width of the grid to 90% of the viewport */
+    max-width: 600px; /* Add a maximum width for large screens */
+}
+
 .grid {
     display: grid;
-    grid-template-columns: repeat(4, 100px);
-    grid-template-rows: repeat(4, 100px);
+    grid-template-columns: repeat(4, 1fr); /* 4 columns with equal size */
+    grid-template-rows: repeat(4, 1fr); /* 4 rows with equal size */
     gap: 5px;
-    margin: 20px auto;
+    aspect-ratio: 1; /* Maintain a perfect square aspect ratio */
+    width: 100%; /* Make the grid fill the container's width */
+    max-width: 90vh; /* Prevent the grid from exceeding the height of the viewport */
+    margin: 0 auto;
     border: 2px solid #333;
 }
 
 .grid .cell {
-    border: 1px dashed #aaa;
-    width: 100px;
-    height: 100px;
     background-color: #fff;
+    border: 1px dashed #aaa;
     display: flex;
-    align-items: center;
     justify-content: center;
-    position: relative; /* Ensure child squares are positioned correctly */
+    align-items: center;
 }
 
 .squares {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 10px;
-    margin-top: 20px;
+    gap: 5px;
+    margin-top: 10px;
 }
 
 .square {
-    width: 100px;
-    height: 100px;
+    flex: 1 0 calc(25% - 10px); /* Adjust size of squares based on grid size */
+    max-width: 100px; /* Prevent them from growing too large on big screens */
+    height: auto;
+    aspect-ratio: 1; /* Keep squares as perfect squares */
     background-color: #00aaff;
-    color: #fff;
+    color: white;
     display: flex;
     justify-content: center;
     align-items: center;
     border-radius: 5px;
     cursor: pointer;
     transition: transform 0.2s ease;
-    position: relative; /* Prevent issues with absolute positioning */
+    text-align: center;
 }
 
 .square.selected {
     border: 2px solid #ff0000;
     box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+}
+
+/* Media query for small screens */
+@media (max-height: 600px) {
+    .container {
+        width: 95vw;
+        max-width: 400px;
+    }
 }
     </style>
 </head>
