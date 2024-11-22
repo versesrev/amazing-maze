@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Drag and Drop Game</title>
-    <!-- <link rel="stylesheet" href="styles.css"> -->
+    <title>Amazing maze</title>
     <style>
 
 /* Ensure the body takes up the entire viewport */
@@ -25,6 +24,13 @@ body {
     max-width: 600px; /* Add a maximum width for large screens */
 }
 
+
+.grid-wrapper {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+}
+
 .grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr); /* 4 columns with equal size */
@@ -43,6 +49,27 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+/* Arrow Styles */
+.arrow {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    background-color: #00aaff;
+    clip-path: polygon(0% 50%, 100% 0%, 100% 100%);
+}
+
+#start-arrow {
+    top: 2%; /* Align with the grid vertically */
+    left: -40px; /* Positioned to the left of grid cell 4 */
+    transform: translateY(calc(100% * 0.25)) rotate(180deg);
+}
+
+#finish-arrow {
+    top: 55%; /* Align with grid cell 11 */
+    left: calc(100% + 10px); /* Positioned to the right of grid cell 11 */
+    transform: translateY(calc(100% * 0.25)) rotate(180deg);
 }
 
 .squares {
@@ -93,13 +120,13 @@ body {
 </head>
 <body>
     <div class="container">
-        <h1>4x4 Grid Game</h1>
-        <div class="grid" id="grid"></div>
-        <div class="squares" id="squares">
-            <!-- 16 Squares will be dynamically created -->
+        <div id="grid-wrapper" class="grid-wrapper">
+            <div id="start-arrow" class="arrow"></div>
+            <div id="grid" class="grid"></div>
+            <div id="finish-arrow" class="arrow"></div>
         </div>
+        <div id="squares" class="squares"></div>
     </div>
-    <!-- <script src="script.js"></script> -->
     <script>
 document.addEventListener("DOMContentLoaded", () => {
     const grid = document.getElementById("grid");
@@ -108,14 +135,26 @@ document.addEventListener("DOMContentLoaded", () => {
     let selectedSquare = null; // To track the currently selected square
 
     // Define possible paths (L-shape, vertical, horizontal)
-    const paths = [
-        '<path d="M50,0 L50,100" />', // Vertical line
-        '<path d="M0,50 L100,50" />', // Horizontal line
-        //'<path d="M0,50 L50,50 L50,100" />', // L-shape bottom left
-        '<path d="M50,0 L50,50 L100,50" />', // L-shape top right
-        '<path d="M50,0 L50,50 L0,50" />', // L-shape top left
-        '<path d="M100,50 L50,50 L50,100" />' // L-shape bottom right
-    ];
+    const paths = {
+        'v': '<path d="M50,0 L50,100" />', // Vertical line
+        'h': '<path d="M0,50 L100,50" />', // Horizontal line
+        'bl': '<path d="M0,50 L50,50 L50,100" />', // L-shape bottom left
+        'tr': '<path d="M50,0 L50,50 L100,50" />', // L-shape top right
+        'tl': '<path d="M50,0 L50,50 L0,50" />', // L-shape top left
+        'br': '<path d="M100,50 L50,50 L50,100" />' // L-shape bottom right
+    };
+	
+	const whole_path = [
+		'h', 'h', 'h', 'bl',
+		'br', 'bl', 'br', 'tl',
+		'v', 'tr', 'tl', 'br',
+		'tr', 'h', 'h', 'tl',
+	];
+	
+	const shuffled_whole_path = whole_path
+		.map(value => ({ value, sort: Math.random() }))
+		.sort((a, b) => a.sort - b.sort)
+		.map(({ value }) => value);
 	
     // Create 16 grid cells
     for (let i = 0; i < 16; i++) {
@@ -138,7 +177,7 @@ document.addEventListener("DOMContentLoaded", () => {
         square.setAttribute("data-square", i);
 		
 		// Add an SVG line or L-shape
-        const randomPath = paths[Math.floor(Math.random() * paths.length)];
+		const randomPath = paths[shuffled_whole_path[i]];
         square.innerHTML = `<svg viewBox="0 0 100 100">${randomPath}</svg>`;
 		
         square.addEventListener("click", () => selectSquare(square));
