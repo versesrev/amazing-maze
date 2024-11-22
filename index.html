@@ -160,7 +160,7 @@ document.addEventListener("DOMContentLoaded", () => {
 	const whole_path = [
 		'br', 'h', 'h', 'bl',
 		'tl', 'br', 'h', 'tl',
-		'br', 'c', 'bl', 'br',
+		'br',       'bl', 'br',
 		'tr', 'tl', 'tr', 'tl',
 	];
 	
@@ -168,6 +168,8 @@ document.addEventListener("DOMContentLoaded", () => {
 		.map(value => ({ value, sort: Math.random() }))
 		.sort((a, b) => a.sort - b.sort)
 		.map(({ value }) => value);
+	
+	const fixedGridId = 9;
 	
     // Create 16 grid cells
     for (let i = 0; i < 16; i++) {
@@ -181,9 +183,14 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
     }
+	
+    const fixedSquare = document.createElement("div");
+    fixedSquare.classList.add("square", "fixed");
+    fixedSquare.innerHTML = `<svg viewBox="0 0 100 100">${paths['c']}</svg>`;
+    grid.children[fixedGridId].appendChild(fixedSquare); // Place in cell 0
 
-    // Create 16 selectable squares
-    for (let i = 0; i < 16; i++) {
+    // Create 15 selectable squares
+    for (let i = 0; i < 15; i++) {
         const square = document.createElement("div");
         square.classList.add("square");
         square.textContent = i + 1;
@@ -208,21 +215,21 @@ document.addEventListener("DOMContentLoaded", () => {
         square.classList.add("selected");
     }
 
-function moveSquareToCell(square, cell) {
-    // Only move if the cell is empty
-    if (!cell.firstChild) {
-        square.classList.remove("selected"); // Remove selection
-        selectedSquare = null;
+	function moveSquareToCell(square, cell) {
+		// Only move if the cell is empty
+		if (!cell.firstChild) {
+			square.classList.remove("selected"); // Remove selection
+			selectedSquare = null;
 
-        // Move square to cell
-        cell.appendChild(square);
+			// Move square to cell
+			cell.appendChild(square);
 
-        // Reset styles for proper display inside the grid
-        square.style.position = "relative";
-        square.style.left = "0";
-        square.style.top = "0";
-    }
-}
+			// Reset styles for proper display inside the grid
+			square.style.position = "relative";
+			square.style.left = "0";
+			square.style.top = "0";
+		}
+	}
 });
     </script>
 </body>
