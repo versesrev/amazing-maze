@@ -66,7 +66,7 @@ body {
 }
 
 #start-arrow {
-    top: 2%; /* Align with the grid vertically */
+    top: 32%; /* Align with the grid vertically */
     left: -40px; /* Positioned to the left of grid cell 4 */
     transform: translateY(calc(100% * 0.25)) rotate(180deg);
 }
@@ -146,14 +146,22 @@ document.addEventListener("DOMContentLoaded", () => {
         'bl': '<path d="M0,50 L50,50 L50,100" />', // L-shape bottom left
         'tr': '<path d="M50,0 L50,50 L100,50" />', // L-shape top right
         'tl': '<path d="M50,0 L50,50 L0,50" />', // L-shape top left
-        'br': '<path d="M100,50 L50,50 L50,100" />' // L-shape bottom right
+        'br': '<path d="M100,50 L50,50 L50,100" />', // L-shape bottom right
+		'c': '<path d="M50,0 L50,100 L50,50 L0,50 L100,50" />' // cross
     };
-	
+	/*
 	const whole_path = [
 		'h', 'h', 'h', 'bl',
 		'br', 'bl', 'br', 'tl',
 		'v', 'tr', 'tl', 'br',
 		'tr', 'h', 'h', 'tl',
+	];
+	*/
+	const whole_path = [
+		'br', 'h', 'h', 'bl',
+		'tl', 'br', 'h', 'tl',
+		'br', 'c', 'bl', 'br',
+		'tr', 'tl', 'tr', 'tl',
 	];
 	
 	const shuffled_whole_path = whole_path
