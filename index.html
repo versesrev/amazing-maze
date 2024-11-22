@@ -1,1 +1,126 @@
-Hello world
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drag and Drop Game</title>
+    <!-- <link rel="stylesheet" href="styles.css"> -->
+    <style>
+/* styles.css */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(4, 100px);
+    grid-template-rows: repeat(4, 100px);
+    gap: 5px;
+    margin: 20px auto;
+    border: 2px solid #333;
+}
+
+.grid .cell {
+    border: 1px dashed #aaa;
+    width: 100px;
+    height: 100px;
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative; /* Ensure child squares are positioned correctly */
+}
+
+.squares {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.square {
+    width: 100px;
+    height: 100px;
+    background-color: #00aaff;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+    position: relative; /* Prevent issues with absolute positioning */
+}
+
+.square.selected {
+    border: 2px solid #ff0000;
+    box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>4x4 Grid Game</h1>
+        <div class="grid" id="grid"></div>
+        <div class="squares" id="squares">
+            <!-- 16 Squares will be dynamically created -->
+        </div>
+    </div>
+    <!-- <script src="script.js"></script> -->
+    <script>
+document.addEventListener("DOMContentLoaded", () => {
+    const grid = document.getElementById("grid");
+    const squaresContainer = document.getElementById("squares");
+
+    let selectedSquare = null; // To track the currently selected square
+
+    // Create 16 grid cells
+    for (let i = 0; i < 16; i++) {
+        const cell = document.createElement("div");
+        cell.classList.add("cell");
+        cell.setAttribute("data-cell", i);
+        grid.appendChild(cell);
+        cell.addEventListener("click", () => {
+            if (selectedSquare) {
+                moveSquareToCell(selectedSquare, cell);
+            }
+        });
+    }
+
+    // Create 16 selectable squares
+    for (let i = 0; i < 16; i++) {
+        const square = document.createElement("div");
+        square.classList.add("square");
+        square.textContent = i + 1;
+        square.setAttribute("data-square", i);
+        square.addEventListener("click", () => selectSquare(square));
+        squaresContainer.appendChild(square);
+    }
+
+    function selectSquare(square) {
+        // Deselect currently selected square, if any
+        if (selectedSquare) {
+            selectedSquare.classList.remove("selected");
+        }
+
+        // Select the new square
+        selectedSquare = square;
+        square.classList.add("selected");
+    }
+
+function moveSquareToCell(square, cell) {
+    // Only move if the cell is empty
+    if (!cell.firstChild) {
+        square.classList.remove("selected"); // Remove selection
+        selectedSquare = null;
+
+        // Move square to cell
+        cell.appendChild(square);
+
+        // Reset styles for proper display inside the grid
+        square.style.position = "relative";
+        square.style.left = "0";
+        square.style.top = "0";
+    }
+}
+});
+    </script>
+</body>
+</html>
