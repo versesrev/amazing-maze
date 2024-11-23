@@ -66,13 +66,13 @@ body {
 }
 
 #start-arrow {
-    top: 32%; /* Align with the grid vertically */
+    top: 80%; /* Align with the grid vertically */
     left: -40px; /* Positioned to the left of grid cell 4 */
     transform: translateY(calc(100% * 0.25)) rotate(180deg);
 }
 
 #finish-arrow {
-    top: 55%; /* Align with grid cell 11 */
+    top: 2%; /* Align with grid cell 11 */
     left: calc(100% + 10px); /* Positioned to the right of grid cell 11 */
     transform: translateY(calc(100% * 0.25)) rotate(180deg);
 }
@@ -188,11 +188,19 @@ document.addEventListener("DOMContentLoaded", () => {
 		'tr', 'h', 'h', 'tl',
 	];
 	*/
+	/*
 	const whole_path = [
 		'br', 'h', 'h', 'bl',
 		'tl', 'br', 'h', 'tl',
 		'br',       'bl', 'br',
 		'tr', 'tl', 'tr', 'tl',
+	];
+	*/
+	const whole_path = [
+		'br', 'bl', 'br', 'h',
+		'v', 'tr',     'bl',
+		'tr', 'h', 'tl', 'v',
+		'h', 'h', 'h', 'tl',
 	];
 	
 	const shuffled_whole_path = whole_path
@@ -200,7 +208,7 @@ document.addEventListener("DOMContentLoaded", () => {
 		.sort((a, b) => a.sort - b.sort)
 		.map(({ value }) => value);
 	
-	const fixedGridId = 9;
+	const fixedGridId = 6;
 	
     // Create 16 grid cells
     for (let i = 0; i < 16; i++) {
