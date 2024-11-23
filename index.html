@@ -241,7 +241,7 @@ document.addEventListener("DOMContentLoaded", () => {
         square.textContent = i + 1;
         square.setAttribute("data-square", i);
 		
-		square.style.maxWidth = document.querySelector('[data-cell="0"]').offsetWidth;
+		square.style.width = document.querySelector('[data-cell="0"]').offsetWidth;
 		
 		// Add an SVG line or L-shape
 		const randomPath = paths[shuffled_whole_path[i]];
