@@ -114,6 +114,32 @@ body {
     box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
 }
 
+.rotate-controls {
+    margin-top: 10px;
+    text-align: center;
+}
+
+#rotate-btn {
+    background-color: #0077cc;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    outline: none;
+    transition: background-color 0.3s;
+}
+
+#rotate-btn:disabled {
+    background-color: #aaa;
+    cursor: not-allowed;
+}
+
+#rotate-btn:hover:enabled {
+    background-color: #005fa3;
+}
+
 /* Media query for small screens */
 @media (max-height: 600px) {
     .container {
@@ -130,14 +156,19 @@ body {
             <div id="grid" class="grid"></div>
             <div id="finish-arrow" class="arrow"></div>
         </div>
-        <div id="squares" class="squares"></div>
+	    <div id="rotate-controls" class="rotate-controls">
+			<button id="rotate-btn" disabled>Rotate</button>
+		</div>
+		<div id="squares" class="squares"></div>
     </div>
     <script>
 document.addEventListener("DOMContentLoaded", () => {
     const grid = document.getElementById("grid");
     const squaresContainer = document.getElementById("squares");
+    const rotateButton = document.getElementById("rotate-btn");
 
     let selectedSquare = null; // To track the currently selected square
+	const rotationAngles = new Map(); // To store the rotation angle for each square
 
     // Define possible paths (L-shape, vertical, horizontal)
     const paths = {
@@ -202,7 +233,16 @@ document.addEventListener("DOMContentLoaded", () => {
 		
         square.addEventListener("click", () => selectSquare(square));
         squaresContainer.appendChild(square);
+		
+		// Initialize rotation for this square
+        rotationAngles.set(square, 0);
     }
+	
+	rotateButton.addEventListener("click", () => {
+        if (selectedSquare) {
+            rotateSquare(selectedSquare);
+        }
+    });
 
     function selectSquare(square) {
         // Deselect currently selected square, if any
@@ -213,6 +253,9 @@ document.addEventListener("DOMContentLoaded", () => {
         // Select the new square
         selectedSquare = square;
         square.classList.add("selected");
+		
+        // Enable rotate button
+        rotateButton.disabled = false;
     }
 
 	function moveSquareToCell(square, cell) {
@@ -230,6 +273,16 @@ document.addEventListener("DOMContentLoaded", () => {
 			square.style.top = "0";
 		}
 	}
+	
+	function rotateSquare(square) {
+        let currentAngle = rotationAngles.get(square) || 0;
+        currentAngle = (currentAngle + 90) % 360; // Increment rotation by 90°
+        rotationAngles.set(square, currentAngle);
+
+        // Apply rotation to the square's SVG
+        const svg = square.querySelector("svg");
+        svg.style.transform = `rotate(${currentAngle}deg)`;
+    }
 });
     </script>
 </body>
