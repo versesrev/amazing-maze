@@ -42,9 +42,10 @@ body {
     grid-template-rows: repeat(4, 1fr); /* 4 rows with equal size */
     gap: 5px;
     aspect-ratio: 1; /* Maintain a perfect square aspect ratio */
-    width: 100%; /* Make the grid fill the container's width */
+    width: 90%; /* Make the grid fill the container's width */
     max-width: 90vh; /* Prevent the grid from exceeding the height of the viewport */
     margin: 0 auto;
+	position: relative;
     border: 2px solid #333;
 }
 
@@ -56,25 +57,31 @@ body {
     align-items: center;
 }
 
+.fixed {
+    background-color: #0077cc; /* A distinct color for the fixed square */
+    pointer-events: none; /* Disable interaction */
+    cursor: not-allowed;
+}
+
 /* Arrow Styles */
 .arrow {
     position: absolute;
-    width: 30px;
-    height: 30px;
+    width: 8%;
+    height: 8%;
     background-color: #00aaff;
     clip-path: polygon(0% 50%, 100% 0%, 100% 100%);
 }
 
 #start-arrow {
     top: 80%; /* Align with the grid vertically */
-    left: -40px; /* Positioned to the left of grid cell 4 */
-    transform: translateY(calc(100% * 0.25)) rotate(180deg);
+    left: 0%; /* Positioned to the left of grid cell 4 */
+    transform: translate(-100%, 0) rotate(180deg);
 }
 
 #finish-arrow {
-    top: 2%; /* Align with grid cell 11 */
-    left: calc(100% + 10px); /* Positioned to the right of grid cell 11 */
-    transform: translateY(calc(100% * 0.25)) rotate(180deg);
+    top: 10%; /* Align with grid cell 11 */
+    left: 100%; /* Positioned to the right of grid cell 11 */
+    transform:  rotate(180deg);
 }
 
 .squares {
