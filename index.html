@@ -89,12 +89,12 @@ body {
     justify-content: center;
     gap: 5px;
     margin-top: 10px;
+	
+      max-width: 90vw;
 }
 
 .square {
-    flex: 1 0 calc(25% - 10px); /* Adjust size of squares based on grid size */
-    max-width: 100px; /* Prevent them from growing too large on big screens */
-    height: auto;
+	  width: clamp(60px, 20vw, 100px); /* Scale between 60px and 100px based on viewport */
     aspect-ratio: 1; /* Keep squares as perfect squares */
     background-color: #00aaff;
     display: flex;
