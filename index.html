@@ -230,12 +230,14 @@ document.addEventListener("DOMContentLoaded", () => {
 		// Add an SVG line or L-shape
 		const randomPath = paths[shuffled_whole_path[i]];
         square.innerHTML = `<svg viewBox="0 0 100 100">${randomPath}</svg>`;
+			
+		// Set a random initial rotation
+        const randomRotation = Math.floor(Math.random() * 4) * 90; // 0, 90, 180, or 270
+        rotationAngles.set(square, randomRotation);
+        square.querySelector("svg").style.transform = `rotate(${randomRotation}deg)`;
 		
         square.addEventListener("click", () => selectSquare(square));
         squaresContainer.appendChild(square);
-		
-		// Initialize rotation for this square
-        rotationAngles.set(square, 0);
     }
 	
 	rotateButton.addEventListener("click", () => {
