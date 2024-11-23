@@ -93,7 +93,7 @@ body {
 
 .square {
     flex: 1 0 calc(25% - 10px); /* Adjust size of squares based on grid size */
-    max-width: 100px; /* Prevent them from growing too large on big screens */
+    max-width: 40px; /* Prevent them from growing too large on big screens */
     height: auto;
     aspect-ratio: 1; /* Keep squares as perfect squares */
     background-color: #00aaff;
@@ -241,7 +241,7 @@ document.addEventListener("DOMContentLoaded", () => {
         square.textContent = i + 1;
         square.setAttribute("data-square", i);
 		
-		square.offsetWidth = document.querySelector('[data-cell="0"]').offsetWidth;
+		//square.style.width = document.querySelector('[data-cell="0"]').offsetWidth;
 		
 		// Add an SVG line or L-shape
 		const randomPath = paths[shuffled_whole_path[i]];
