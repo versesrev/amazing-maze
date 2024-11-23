@@ -42,7 +42,7 @@ body {
     grid-template-rows: repeat(4, 1fr); /* 4 rows with equal size */
     gap: 5px;
     aspect-ratio: 1; /* Maintain a perfect square aspect ratio */
-    width: 90%; /* Make the grid fill the container's width */
+    width: 80%; /* Make the grid fill the container's width */
     max-width: 90vh; /* Prevent the grid from exceeding the height of the viewport */
     margin: 0 auto;
     border: 2px solid #333;
@@ -65,21 +65,21 @@ body {
 /* Arrow Styles */
 .arrow {
     position: absolute;
-    width: 8%;
-    height: 8%;
+    width: 6%;
+    height: 6%;
     background-color: #00aaff;
     clip-path: polygon(0% 50%, 100% 0%, 100% 100%);
 }
 
 #start-arrow {
-    top: 80%; /* Align with the grid vertically */
+    top: 77%; /* Align with the grid vertically */
     left: 0%; /* Positioned to the left of grid cell 4 */
-    transform: translate(-100%, 0) rotate(180deg);
+    transform:  rotate(180deg);
 }
 
 #finish-arrow {
-    top: 10%; /* Align with grid cell 11 */
-    left: 100%; /* Positioned to the right of grid cell 11 */
+    top: 15%; /* Align with grid cell 11 */
+    left: 94%; /* Positioned to the right of grid cell 11 */
     transform:  rotate(180deg);
 }
 
